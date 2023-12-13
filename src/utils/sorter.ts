@@ -1,5 +1,6 @@
 import QuickSort from '../algorithms/quickSort';
 import MergeSort from '../algorithms/mergeSort';
+import bubbleSort from '../algorithms/bubbleSort';
 
 class Sorter {
   private quickSorter: QuickSort;
@@ -16,6 +17,10 @@ class Sorter {
 
   public performMergeSort(arr: number[]): number[] {
     return this.mergeSorter.sort([...arr]);
+  }
+
+  public performBubbleSort(arr: number[]): number[] {
+    return bubbleSort([...arr]);
   }
 }
 
