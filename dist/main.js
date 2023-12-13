@@ -3,11 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const sorter_1 = __importDefault(require("./utils/sorter"));
-const sorter = new sorter_1.default();
+const sorter_1 = __importDefault(require("./utils/sorter")); // Importing the Sorter class
+const sorter = new sorter_1.default(); // Creating an instance of the Sorter class
+// Function to generate a random array of unique numbers
 const generateRandomArray = (size) => {
     const arr = [];
     const set = new Set(); // Using a Set to track unique numbers
+    // Generating random unique numbers until the desired array size is reached
     while (set.size < size) {
         const randomNumber = Math.floor(Math.random() * 100000); // Generating random numbers (adjust range if needed)
         if (!set.has(randomNumber)) {
@@ -15,20 +17,23 @@ const generateRandomArray = (size) => {
             arr.push(randomNumber);
         }
     }
-    return arr;
+    return arr; // Returning the generated random array
 };
+// Function to measure the execution time of a sorting function on a given array
 const measureTime = (sortingFunction, arr) => {
-    const startTime = Date.now();
-    sortingFunction(arr);
-    const endTime = Date.now();
-    return endTime - startTime;
+    const startTime = Date.now(); // Recording the start time of the sorting operation
+    sortingFunction(arr); // Executing the sorting function
+    const endTime = Date.now(); // Recording the end time of the sorting operation
+    return endTime - startTime; // Calculating and returning the time taken for sorting
 };
 const arraySizes = [10000, 20000, 30000, 40000, 50000, 100000]; // Different array sizes for testing
+// Iterating through various array sizes
 arraySizes.forEach((size) => {
-    const randomArray = generateRandomArray(size);
-    const countSortTime = measureTime(sorter.performCountSort.bind(sorter), [...randomArray]);
-    const quickSortTime = measureTime(sorter.performQuickSort.bind(sorter), [...randomArray]);
-    const bubbleSortTime = measureTime(sorter.performBubbleSort.bind(sorter), [...randomArray]);
+    const randomArray = generateRandomArray(size); // Generating a random array of the current size
+    const countSortTime = measureTime(sorter.performCountSort.bind(sorter), [...randomArray]); // Measuring Count Sort time
+    const quickSortTime = measureTime(sorter.performQuickSort.bind(sorter), [...randomArray]); // Measuring Quick Sort time
+    const bubbleSortTime = measureTime(sorter.performBubbleSort.bind(sorter), [...randomArray]); // Measuring Bubble Sort time
+    // Displaying the array size and sorting algorithm execution times
     console.log(`Array size: ${size}`);
     console.log(`Count Sort Time: ${countSortTime}ms`);
     console.log(`Quicksort Time: ${quickSortTime}ms`);
