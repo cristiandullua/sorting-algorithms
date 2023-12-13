@@ -23,15 +23,15 @@ const measureTime = (sortingFunction, arr) => {
     const endTime = Date.now();
     return endTime - startTime;
 };
-const arraySizes = [10000, 20000, 30000, 40000, 50000]; // Different array sizes for testing
+const arraySizes = [10000, 20000, 30000, 40000, 50000, 100000]; // Different array sizes for testing
 arraySizes.forEach((size) => {
     const randomArray = generateRandomArray(size);
+    const countSortTime = measureTime(sorter.performCountSort.bind(sorter), [...randomArray]);
     const quickSortTime = measureTime(sorter.performQuickSort.bind(sorter), [...randomArray]);
-    const mergeSortTime = measureTime(sorter.performMergeSort.bind(sorter), [...randomArray]);
     const bubbleSortTime = measureTime(sorter.performBubbleSort.bind(sorter), [...randomArray]);
     console.log(`Array size: ${size}`);
+    console.log(`Count Sort Time: ${countSortTime}ms`);
     console.log(`Quicksort Time: ${quickSortTime}ms`);
-    console.log(`Mergesort Time: ${mergeSortTime}ms`);
     console.log(`Bubble Sort Time: ${bubbleSortTime}ms`);
     console.log('------------------------');
 });
