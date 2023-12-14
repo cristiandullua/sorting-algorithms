@@ -1,6 +1,7 @@
 import Sorter from './utils/sorter';
 import readline from 'readline';
 
+// Custom error class for invalid input handling
 class InvalidInputError extends Error {
   constructor(message: string) {
     super(message);
@@ -8,29 +9,28 @@ class InvalidInputError extends Error {
   }
 }
 
-const sorter = new Sorter();
+const sorter = new Sorter(); // Instantiate the Sorter class
 
-const rl = readline.createInterface({
+const rl = readline.createInterface({ // Create readline interface
   input: process.stdin,
   output: process.stdout,
 });
 
-// Function to measure sorting algorithm execution time
-const measureTime = (sortingFunction: (arr: number[]) => number[], arr: number[]) => {
-  const startTime = Date.now();
+const measureTime = (sortingFunction: (arr: number[]) => number[], arr: number[]): number => {
+  // Function to measure sorting algorithm execution time
+  const startTime: number = Date.now();
   sortingFunction(arr);
-  const endTime = Date.now();
+  const endTime: number = Date.now();
   return endTime - startTime;
 };
 
-// Function to generate a random array of unique numbers
 const generateRandomArray = (size: number): number[] => {
-  const arr = [];
-  const set = new Set(); // Using a Set to track unique numbers
+  // Function to generate a random array of unique numbers
+  const arr: number[] = [];
+  const set: Set<number> = new Set(); // Using a Set to track unique numbers
 
-  // Generating random unique numbers until the desired array size is reached
   while (set.size < size) {
-    const randomNumber = Math.floor(Math.random() * 100000); // Generating random numbers (adjust range if needed)
+    const randomNumber: number = Math.floor(Math.random() * 100000); // Generating random numbers (adjust range if needed)
     if (!set.has(randomNumber)) {
       set.add(randomNumber);
       arr.push(randomNumber);
@@ -40,11 +40,12 @@ const generateRandomArray = (size: number): number[] => {
   return arr; // Returning the generated random array
 };
 
-const displaySortingTimes = (size: number) => {
-  const randomArray = generateRandomArray(size);
-  const countSortTime = measureTime(sorter.performCountSort.bind(sorter), [...randomArray]);
-  const quickSortTime = measureTime(sorter.performQuickSort.bind(sorter), [...randomArray]);
-  const bubbleSortTime = measureTime(sorter.performBubbleSort.bind(sorter), [...randomArray]);
+const displaySortingTimes = (size: number): void => {
+  // Function to display sorting times for various sorting algorithms
+  const randomArray: number[] = generateRandomArray(size);
+  const countSortTime: number = measureTime(sorter.performCountSort.bind(sorter), [...randomArray]);
+  const quickSortTime: number = measureTime(sorter.performQuickSort.bind(sorter), [...randomArray]);
+  const bubbleSortTime: number = measureTime(sorter.performBubbleSort.bind(sorter), [...randomArray]);
 
   // Displaying the array size and sorting algorithm execution times
   console.log(`Array size: ${size}`);
@@ -54,34 +55,40 @@ const displaySortingTimes = (size: number) => {
   console.log('------------------------');
 };
 
-const exampleArraySizes = [10000, 20000, 30000, 40000, 50000];
+const exampleArraySizes: number[] = [10000, 20000, 30000, 40000, 50000];
 
-// Displaying examples for various array sizes
-exampleArraySizes.forEach((size) => {
+// Display examples for various array sizes
+exampleArraySizes.forEach((size: number) => {
   displaySortingTimes(size);
 });
 
-rl.question('Enter the number of items to process: ', (input) => {
-  try {
-    const numberOfItems = parseInt(input);
+const getUserInput = (): void => {
+  // Function to get user input for the number of items to process
+  rl.question('Enter the number of items to process: ', (input: string) => {
+    try {
+      const numberOfItems: number = parseInt(input);
 
-    if (isNaN(numberOfItems) || numberOfItems <= 0) {
-      throw new InvalidInputError('Please enter a valid positive number for the items count.');
+      if (isNaN(numberOfItems) || numberOfItems <= 0) {
+        throw new InvalidInputError('Please enter a valid positive number for the items count.');
+      }
+
+      if (numberOfItems > 1000000) {
+        throw new InvalidInputError('The number is too large. Please enter a smaller number.');
+      }
+
+      displaySortingTimes(numberOfItems);
+      rl.close();
+
+    } catch (error) {
+      if (error instanceof InvalidInputError) {
+        console.error('Invalid Input Error:', error.message);
+        getUserInput(); // Recursive call to get valid input after displaying error
+      } else {
+        console.error('An unexpected error occurred:', error);
+        rl.close();
+      }
     }
+  });
+};
 
-    if (numberOfItems > 1000000) {
-      throw new InvalidInputError('The number is too large. Please enter a smaller number.');
-    }
-
-    displaySortingTimes(numberOfItems);
-
-  } catch (error) {
-    if (error instanceof InvalidInputError) {
-      console.error('Invalid Input Error:', error.message);
-    } else {
-      console.error('An unexpected error occurred:', error);
-    }
-  } finally {
-    rl.close();
-  }
-});
+getUserInput(); // Initial function call to start the user input process
