@@ -30,7 +30,7 @@ const generateRandomArray = (size: number): number[] => {
   const set: Set<number> = new Set(); // Using a Set to track unique numbers
 
   while (set.size < size) {
-    const randomNumber: number = Math.floor(Math.random() * 100000); // Generating random numbers (adjust range if needed)
+    const randomNumber: number = Math.floor(Math.random() * size); // Generating random numbers (adjust range if needed)
     if (!set.has(randomNumber)) {
       set.add(randomNumber);
       arr.push(randomNumber);

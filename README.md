@@ -1,32 +1,32 @@
 # Overview
 
-{Important! Do not say in this section that this is college assignment. Talk about what you are trying to accomplish as a software engineer to further your learning.}
+This project represents a TypeScript-based software demonstrating various sorting algorithms (such as Count Sort, Quicksort, and Bubble Sort) and their execution times for different array sizes. The software aims to showcase proficiency in TypeScript, emphasizing language syntax, and practical implementation of sorting algorithms.
 
-{Provide a description of the software that you wrote to demonstrate the TypeScript language.}
+The primary goal of this project is to deepen understanding and expertise as a software engineer by implementing sorting algorithms in TypeScript. The focus is on comprehending TypeScript's syntax nuances, enhancing problem-solving skills, and showcasing the efficiency of various sorting algorithms.
 
-{Describe your purpose for writing this software.}
+For a detailed demonstration and walkthrough of the code showcasing TypeScript syntax and sorting algorithms, please refer to the following YouTube video:
 
-{Provide a link to your YouTube demonstration. It should be a 4-5 minute demo of the software running and a walkthrough of the code. Focus should be on sharing what you learned about the language syntax.}
-
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://www.loom.com/share/78edd276a6a74181a826815fc1dd3cfa?sid=6fa88861-cd34-4916-87b5-cf700daef925)
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
+The software was developed using the following tools and languages:
 
-{Describe the programming language that you used and any libraries.}
+- **Development Tools:** Integrated Development Environment (IDE) - Visual Studio Code
+- **Programming Language:** TypeScript
+- **Libraries:** Node.js for the runtime environment, readline library for handling user input
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
+During the development process, the following websites proved to be beneficial:
 
-- [Web Site Name](http://url.link.goes.here)
-- [Web Site Name](http://url.link.goes.here)
+- [TypeScript Official Documentation](https://www.typescriptlang.org/docs/)
+- [Node.js Official Documentation](https://nodejs.org/en/docs/)
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
+For future enhancements and improvements, the following items are on the agenda:
 
-- Item 1
-- Item 2
-- Item 3
+- Optimize sorting algorithms for larger datasets.
+- Implement additional sorting algorithms for comparison.
+- Enhance user input validation and error handling.
