@@ -1,6 +1,27 @@
-import Sorter from './utils/sorter'; // Importing the Sorter class
+import Sorter from './utils/sorter';
+import readline from 'readline';
 
-const sorter = new Sorter(); // Creating an instance of the Sorter class
+class InvalidInputError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'InvalidInputError';
+  }
+}
+
+const sorter = new Sorter();
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+// Function to measure sorting algorithm execution time
+const measureTime = (sortingFunction: (arr: number[]) => number[], arr: number[]) => {
+  const startTime = Date.now();
+  sortingFunction(arr);
+  const endTime = Date.now();
+  return endTime - startTime;
+};
 
 // Function to generate a random array of unique numbers
 const generateRandomArray = (size: number): number[] => {
@@ -19,22 +40,11 @@ const generateRandomArray = (size: number): number[] => {
   return arr; // Returning the generated random array
 };
 
-// Function to measure the execution time of a sorting function on a given array
-const measureTime = (sortingFunction: (arr: number[]) => number[], arr: number[]): number => {
-  const startTime = Date.now(); // Recording the start time of the sorting operation
-  sortingFunction(arr); // Executing the sorting function
-  const endTime = Date.now(); // Recording the end time of the sorting operation
-  return endTime - startTime; // Calculating and returning the time taken for sorting
-};
-
-const arraySizes = [10000, 20000, 30000, 40000, 50000, 100000]; // Different array sizes for testing
-
-// Iterating through various array sizes
-arraySizes.forEach((size) => {
-  const randomArray = generateRandomArray(size); // Generating a random array of the current size
-  const countSortTime = measureTime(sorter.performCountSort.bind(sorter), [...randomArray]); // Measuring Count Sort time
-  const quickSortTime = measureTime(sorter.performQuickSort.bind(sorter), [...randomArray]); // Measuring Quick Sort time
-  const bubbleSortTime = measureTime(sorter.performBubbleSort.bind(sorter), [...randomArray]); // Measuring Bubble Sort time
+const displaySortingTimes = (size: number) => {
+  const randomArray = generateRandomArray(size);
+  const countSortTime = measureTime(sorter.performCountSort.bind(sorter), [...randomArray]);
+  const quickSortTime = measureTime(sorter.performQuickSort.bind(sorter), [...randomArray]);
+  const bubbleSortTime = measureTime(sorter.performBubbleSort.bind(sorter), [...randomArray]);
 
   // Displaying the array size and sorting algorithm execution times
   console.log(`Array size: ${size}`);
@@ -42,4 +52,36 @@ arraySizes.forEach((size) => {
   console.log(`Quicksort Time: ${quickSortTime}ms`);
   console.log(`Bubble Sort Time: ${bubbleSortTime}ms`);
   console.log('------------------------');
+};
+
+const exampleArraySizes = [10000, 20000, 30000, 40000, 50000];
+
+// Displaying examples for various array sizes
+exampleArraySizes.forEach((size) => {
+  displaySortingTimes(size);
+});
+
+rl.question('Enter the number of items to process: ', (input) => {
+  try {
+    const numberOfItems = parseInt(input);
+
+    if (isNaN(numberOfItems) || numberOfItems <= 0) {
+      throw new InvalidInputError('Please enter a valid positive number for the items count.');
+    }
+
+    if (numberOfItems > 1000000) {
+      throw new InvalidInputError('The number is too large. Please enter a smaller number.');
+    }
+
+    displaySortingTimes(numberOfItems);
+
+  } catch (error) {
+    if (error instanceof InvalidInputError) {
+      console.error('Invalid Input Error:', error.message);
+    } else {
+      console.error('An unexpected error occurred:', error);
+    }
+  } finally {
+    rl.close();
+  }
 });
